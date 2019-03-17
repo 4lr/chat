@@ -8,10 +8,13 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,12 +28,12 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping
-    public List<MessageTO> getMessagesByRoomId(@RequestParam UUID roomId) {
+    public List<MessageTO> getMessagesByRoomId(@RequestParam @NotNull UUID roomId) {
         return messageService.findAllByRoomId(roomId);
     }
 
     @PostMapping
-    public MessageTO postMessage(PostMessageTO messageTO) {
+    public MessageTO postMessage(@RequestBody @Valid PostMessageTO messageTO) {
         return messageService.save(messageTO);
     }
 }

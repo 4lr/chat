@@ -13,7 +13,7 @@ import java.util.List;
 public class MongoConfig {
 
     @Bean
-    public MongoCustomConversions customConversions() {
+    public MongoCustomConversions mongoCustomConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
         converters.add(JSR310DateConverters.DateToZonedDateTimeConverter.INSTANCE);
         converters.add(JSR310DateConverters.ZonedDateTimeToDateConverter.INSTANCE);

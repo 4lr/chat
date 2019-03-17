@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  storage-mongodb:
+    image: 'bitnami/mongodb:3.6'
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - "27017:27017"
+    volumes:
+      - 'storage-mongodb-volume:/bitnami'
+    user: root
+
+volumes:
+  storage-mongodb-volume:
+    driver: local

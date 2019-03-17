@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-public final class JSR310DateConverters {
+public class JSR310DateConverters {
 
     private JSR310DateConverters() {
     }

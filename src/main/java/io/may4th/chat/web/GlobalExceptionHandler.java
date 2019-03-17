@@ -1,6 +1,6 @@
 package io.may4th.chat.web;
 
-import io.may4th.chat.domain.exceptions.ResourceNotFoundException;
+import io.may4th.chat.services.exceptions.ResourceNotFoundException;
 import io.may4th.chat.web.tos.ErrorDetails;
 import lombok.val;
 import org.springframework.http.HttpStatus;

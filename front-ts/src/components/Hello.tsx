@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 
-class Hello extends PureComponent {
+export default class Hello extends PureComponent {
     render() {
         return (
             <div>
@@ -11,5 +11,3 @@ class Hello extends PureComponent {
         );
     }
 }
-
-export default Hello;

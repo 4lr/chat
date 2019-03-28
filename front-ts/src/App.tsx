@@ -3,11 +3,7 @@ import {BrowserRouter as Router, Route, RouteComponentProps} from "react-router-
 import Header from "./components/Header";
 import Hello from "./components/Hello";
 import Room from "./components/Room";
-import MessageTo from "./api/MessageTo";
 
-export interface State {
-    messages: MessageTo[]
-}
 
 export default class App extends Component {
     render() {

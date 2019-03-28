@@ -1,6 +1,5 @@
 import React, {ChangeEvent, PureComponent} from 'react';
-import uuidv4 from 'uuid/v4';
-import MessageTo from "../api/MessageTo";
+import {Message, messageStore} from "../stores/MessageStore";
 
 export interface Props {
     roomId: string
@@ -8,11 +7,8 @@ export interface Props {
 
 export interface State {
     newMessageText: string,
-    messages: MessageTo[]
+    messages: Message[]
 }
-
-const handleChange = Symbol();
-const handleSubmit = Symbol();
 
 export default class Room extends PureComponent<Props, State> {
 
@@ -21,15 +17,25 @@ export default class Room extends PureComponent<Props, State> {
         messages: []
     };
 
-    [handleChange] = (ev: ChangeEvent<HTMLInputElement>) => {
+    protected subscriptionId: string = '';
+
+    componentDidMount() {
+        this.subscriptionId = messageStore.subscribe(this.props.roomId, (messages) => {
+            this.setState({messages: messages});
+        });
+    }
+
+    componentWillUnmount() {
+        messageStore.unSubscribe(this.subscriptionId);
+    }
+
+    protected handleChange(ev: ChangeEvent<HTMLInputElement>) {
         this.setState({newMessageText: ev.target.value});
     };
 
-    [handleSubmit] = () => {
-        const messages: MessageTo[] = this.state.messages;
-        const newMessage: MessageTo = {id: uuidv4(), body: this.state.newMessageText};
-        messages.push(newMessage);
-        this.setState({newMessageText: '', messages: messages});
+    protected handleSubmit() {
+        messageStore.postMessage({roomId: this.props.roomId, body: this.state.newMessageText});
+        this.setState({newMessageText: ''});
     };
 
     render() {
@@ -39,14 +45,14 @@ export default class Room extends PureComponent<Props, State> {
                     Room {this.props.roomId}
                 </div>
                 <div>
-                    {this.state.messages.map((message: MessageTo) => <div key={message.id}>{message.body}</div>)}
+                    {this.state.messages.map((message: Message) => <div key={message.id}>{message.body}</div>)}
                 </div>
                 <div>
                     <input
-                        onChange={this[handleChange]}
+                        onChange={this.handleChange.bind(this)}
                         value={this.state.newMessageText}
                     />
-                    <button onClick={this[handleSubmit]}>Send</button>
+                    <button onClick={this.handleSubmit.bind(this)}>Send</button>
                 </div>
             </div>
         );

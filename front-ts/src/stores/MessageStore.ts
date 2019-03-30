@@ -1,27 +1,14 @@
 import uuidv4 from 'uuid/v4';
-
-interface MessageTo {
-    id: string;
-    userId: string;
-    roomId: string;
-    body: string;
-    timestamp: string;
-}
-
-interface PostMessageTo {
-    id: string,
-    userId: string,
-    roomId: string,
-    body: string
-}
+import {messageController, MessageTo, PostMessageTo} from "../api/MessageController";
 
 const userId = '00000000-0000-0000-C000-000000000777';
+const timeout = 2000;
 
 class MessageStore {
 
     protected subscribers: Map<string, Map<string, (messages: Message[]) => void>> = new Map();
-    protected store: Map<string, Message[]> = new Map();
-    protected interval = setInterval(this.fetchMessages.bind(this), 1000);
+    //protected store: Map<string, Message[]> = new Map();
+    protected fetchTask = setTimeout(this.fetchMessages.bind(this), timeout);
 
     public postMessage(newMessage: { roomId: string; body: string; }) {
         const postMessageTo: PostMessageTo = {
@@ -30,14 +17,21 @@ class MessageStore {
             roomId: newMessage.roomId,
             body: newMessage.body,
         };
-        const messages = this.store.has(postMessageTo.roomId) ? this.store.get(postMessageTo.roomId) : [];
+
+        /*const messages = this.store.has(postMessageTo.roomId) ? this.store.get(postMessageTo.roomId) : [];
         // @ts-ignore
         messages.push({
             ...postMessageTo,
             timestamp: new Date()
         });
         // @ts-ignore
-        this.store.set(postMessageTo.roomId, messages);
+        this.store.set(postMessageTo.roomId, messages);*/
+
+        try {
+            messageController.postMessage(postMessageTo);
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     public subscribe(roomId: string, callback: (messages: Message[]) => void): string {
@@ -55,10 +49,24 @@ class MessageStore {
     };
 
     protected fetchMessages() {
-        this.subscribers.forEach((roomSubscribers, roomId) => {
-            const messages = this.store.get(roomId);
-            roomSubscribers.forEach(callback => callback(Array.from(messages ? messages : [])));
+        this.subscribers.forEach(async (roomSubscribers, roomId) => {
+
+            //const messages = this.store.get(roomId);
+
+            try {
+                const messageTos = await messageController.getMessages(roomId);
+                const messages = messageTos.map((messageTo) => {
+                    return {
+                        ...messageTo,
+                        timestamp: new Date(messageTo.timestamp)
+                    };
+                });
+                roomSubscribers.forEach(callback => callback(Array.from(messages ? messages : [])));
+            } catch (e) {
+                console.error(e);
+            }
         });
+        this.fetchTask = setTimeout(this.fetchMessages.bind(this), timeout);
     };
 }
 

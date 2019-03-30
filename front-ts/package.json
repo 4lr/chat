@@ -11,6 +11,7 @@
     "@types/react-dom": "16.8.3",
     "@types/react-router-dom": "^4.3.1",
     "@types/uuid": "^3.4.4",
+    "axios": "^0.18.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -124,5 +125,6 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "proxy": "http://localhost:8080"
 }

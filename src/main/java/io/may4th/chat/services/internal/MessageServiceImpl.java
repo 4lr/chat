@@ -3,8 +3,8 @@ package io.may4th.chat.services.internal;
 import io.may4th.chat.domain.repositories.MessageRepository;
 import io.may4th.chat.services.MessageService;
 import io.may4th.chat.services.mappers.MessageMapper;
-import io.may4th.chat.web.tos.MessageTO;
-import io.may4th.chat.web.tos.PostMessageTO;
+import io.may4th.chat.services.tos.MessageTO;
+import io.may4th.chat.services.tos.NewMessageTO;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageTO save(@Valid PostMessageTO messageTO) {
-        val message = messageMapper.en(messageTO);
+    public MessageTO save(NewMessageTO newMessageTO) {
+        val message = messageMapper.en(newMessageTO);
         message.setTimestamp(ZonedDateTime.now());
         return messageMapper.to(messageRepository.save(message));
     }

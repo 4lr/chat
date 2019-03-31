@@ -1,6 +1,6 @@
 package io.may4th.chat.web;
 
-import io.may4th.chat.web.tos.ApiError;
+import io.may4th.chat.web.payload.ApiError;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;

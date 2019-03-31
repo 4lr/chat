@@ -1,4 +1,4 @@
-package io.may4th.chat.web.tos;
+package io.may4th.chat.web.payload;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

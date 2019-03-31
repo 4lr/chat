@@ -5,12 +5,12 @@ const path = '/api/message';
 
 class MessageController {
 
-    public async postMessage(postMessageTo: PostMessageTo) : Promise<MessageTo> {
+    public async postMessage(postMessageTo: PostMessageTo): Promise<MessageTo> {
         const result = await axios.post<MessageTo>(path, postMessageTo);
         return result.data;
     };
 
-    public async getMessages(roomId: string) : Promise<MessageTo[]> {
+    public async getMessages(roomId: string): Promise<MessageTo[]> {
         const result = await axios.get<MessageTo[]>(path + '?' + querystring.stringify({roomId: roomId}));
         return result.data;
     };

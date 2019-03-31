@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4';
-import {messageController, MessageTo, PostMessageTo} from "../api/MessageController";
+import {messageController, PostMessageTo} from "../api/MessageController";
 
 const userId = '00000000-0000-0000-C000-000000000777';
 const timeout = 2000;
@@ -7,8 +7,13 @@ const timeout = 2000;
 class MessageStore {
 
     protected subscribers: Map<string, Map<string, (messages: Message[]) => void>> = new Map();
+
     //protected store: Map<string, Message[]> = new Map();
-    protected fetchTask = setTimeout(this.fetchMessages.bind(this), timeout);
+
+    constructor() {
+        this.fetchMessages = this.fetchMessages.bind(this);
+        setTimeout(this.fetchMessages, timeout);
+    }
 
     public postMessage(newMessage: { roomId: string; body: string; }) {
         const postMessageTo: PostMessageTo = {
@@ -66,7 +71,7 @@ class MessageStore {
                 console.error(e);
             }
         });
-        this.fetchTask = setTimeout(this.fetchMessages.bind(this), timeout);
+        setTimeout(this.fetchMessages, timeout);
     };
 }
 

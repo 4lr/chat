@@ -1,9 +1,9 @@
 package io.may4th.chat.web.controllers;
 
 import io.may4th.chat.services.MessageService;
-import io.may4th.chat.web.tos.ApiError;
-import io.may4th.chat.web.tos.MessageTO;
-import io.may4th.chat.web.tos.PostMessageTO;
+import io.may4th.chat.web.payload.ApiError;
+import io.may4th.chat.services.tos.MessageTO;
+import io.may4th.chat.services.tos.NewMessageTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -50,7 +50,7 @@ public class MessageController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageTO postMessage(@RequestBody @Valid PostMessageTO postMessageTO) {
-        return messageService.save(postMessageTO);
+    public MessageTO postMessage(@RequestBody @Valid NewMessageTO newMessageTO) {
+        return messageService.save(newMessageTO);
     }
 }

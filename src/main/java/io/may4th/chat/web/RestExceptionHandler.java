@@ -1,6 +1,6 @@
 package io.may4th.chat.web;
 
-import io.may4th.chat.web.tos.ApiError;
+import io.may4th.chat.web.payload.ApiError;
 import lombok.val;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;

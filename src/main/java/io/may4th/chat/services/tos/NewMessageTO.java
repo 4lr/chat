@@ -1,4 +1,4 @@
-package io.may4th.chat.web.tos;
+package io.may4th.chat.services.tos;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @ApiModel
 @Getter
 @Setter
-class BaseMessageTO {
+public class NewMessageTO {
 
     @ApiModelProperty(required = true, example = "00000000-0000-0000-C000-000000000046")
     @NotNull

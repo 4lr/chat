@@ -8,24 +8,19 @@ import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Accessors(chain = true)
 @Getter
 @Setter
-public class Message {
+public class User {
 
     @Id
     @NotNull
     private UUID id;
-    @NotNull
-    private UUID userId;
-    @NotNull
-    private UUID roomId;
-    @NotNull
-    private ZonedDateTime timestamp;
     @NotBlank
-    @Length(min = 1, max = 4096)
-    private String body;
+    @Length(min = 4, max = 64)
+    private String username;
+    @NotNull
+    private String hash;
 }

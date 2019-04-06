@@ -10,8 +10,6 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +24,7 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
 
     @Override
-    public List<MessageTO> findAllByRoomId(@NotNull UUID roomId) {
+    public List<MessageTO> findAllByRoomId(UUID roomId) {
         return messageMapper.to(messageRepository.findAllByRoomIdOrderByTimestamp(roomId));
     }
 

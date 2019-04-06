@@ -1,6 +1,6 @@
 package io.may4th.chat.web;
 
-import io.may4th.chat.web.payload.ApiError;
+import io.may4th.chat.web.payload.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,8 +13,8 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 
     @RequestMapping(value = PATH)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError error() {
-        return new ApiError(HttpStatus.BAD_REQUEST, "Unsupported operation");
+    public ApiErrorResponse error() {
+        return new ApiErrorResponse(HttpStatus.BAD_REQUEST, "Unsupported operation");
     }
 
     @Override

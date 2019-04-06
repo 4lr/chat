@@ -12,20 +12,22 @@ import java.util.List;
 @AllArgsConstructor
 @ApiModel
 @Getter
-public class ApiError {
+public class ApiErrorResponse {
 
     @ApiModelProperty(required = true, example = "BAD_REQUEST")
     private final HttpStatus status;
+
     @ApiModelProperty(required = true)
     private final String message;
+
     @ApiModelProperty(required = true)
     private List<String> errors = Collections.emptyList();
 
-    public ApiError(HttpStatus status, String message, String error) {
+    public ApiErrorResponse(HttpStatus status, String message, String error) {
         this(status, message, Collections.singletonList(error));
     }
 
-    public ApiError(HttpStatus status, String message) {
+    public ApiErrorResponse(HttpStatus status, String message) {
         this.status = status;
         this.message = message;
     }

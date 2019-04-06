@@ -1,4 +1,4 @@
-import React, {ChangeEvent, PureComponent} from 'react';
+import React, {PureComponent} from 'react';
 import uuidv4 from 'uuid/v4';
 
 const handleChange = Symbol();
@@ -11,13 +11,13 @@ class Room extends PureComponent {
         messages: []
     };
 
-    [handleChange] = (ev: ChangeEvent<HTMLInputElement>) => {
+    [handleChange] = (ev) => {
         this.setState({newMessageText: ev.target.value});
     };
 
     [handleSubmit] = () => {
-        const messages: Message[] = this.state.messages;
-        const newMessage: Message = {id: uuidv4(), body: this.state.newMessageText};
+        const messages = this.state.messages;
+        const newMessage = {id: uuidv4(), body: this.state.newMessageText};
         messages.push(newMessage);
         this.setState({newMessageText: '', messages: messages});
     };
@@ -29,12 +29,12 @@ class Room extends PureComponent {
                     Room {this.roomId}
                 </div>
                 <div>
-                    {this.state.messages.map((message: Message) => <div key={message.id}>{message.body}</div>) }
+                    {this.state.messages.map((message) => <div key={message.id}>{message.body}</div>) }
                 </div>
                 <div>
                     <input
                         onChange={this[handleChange]}
-                        value={this.newMessageText}
+                        value={this.state.newMessageText}
                     />
                     <button onClick={this[handleSubmit]}>Send</button>
                 </div>

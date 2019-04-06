@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, RouteComponentProps} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import Header from "./components/Header";
 import Hello from "./components/Hello";
 import Room from "./components/Room";
@@ -12,7 +12,7 @@ class App extends Component {
                 <Route exact path='/' component={Hello}/>
                 <Route path={`/:roomId`}
                        component={
-                           (props: RouteComponentProps<{ roomId: string }>) =>
+                           (props) =>
                                <Room roomId={props.match.params.roomId}/>
                        }
                 />

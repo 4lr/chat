@@ -55,7 +55,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public UserPrincipal getCurrentUser(@ApiIgnore @CurrentUser UserPrincipal currentUser) {
+    public UserPrincipal me(@ApiIgnore @CurrentUser UserPrincipal currentUser) {
         return currentUser;
     }
 

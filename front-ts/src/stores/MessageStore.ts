@@ -59,7 +59,7 @@ class MessageStore {
             //const messages = this.store.get(roomId);
 
             try {
-                const messageTos = await messageController.getMessages(roomId);
+                const messageTos = await messageController.getMessagesByRoomId(roomId);
                 const messages = messageTos.map((messageTo) => {
                     return {
                         ...messageTo,

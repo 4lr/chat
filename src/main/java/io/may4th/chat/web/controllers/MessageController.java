@@ -1,5 +1,6 @@
 package io.may4th.chat.web.controllers;
 
+import io.may4th.chat.security.api.Secured;
 import io.may4th.chat.services.MessageService;
 import io.may4th.chat.services.tos.MessageTO;
 import io.may4th.chat.services.tos.NewMessageTO;
@@ -28,6 +29,7 @@ import java.util.UUID;
 @ApiResponses({
     @ApiResponse(code = 400, message = "Bad Request", response = ApiErrorResponse.class)
 })
+@Secured
 public class MessageController {
 
     @Autowired
@@ -48,6 +50,7 @@ public class MessageController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MessageTO postMessage(@RequestBody @Valid NewMessageTO newMessageTO) {
+        // TODO validate userId
         return messageService.save(newMessageTO);
     }
 }

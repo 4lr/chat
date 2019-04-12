@@ -8,11 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @ApiModel
 @Getter
-public class JwtAuthResponse {
+public class AuthTokenResponse {
 
     @ApiModelProperty(required = true)
     private final String accessToken;
-
-    @ApiModelProperty(required = true)
-    private final String tokenType = "Bearer";
 }

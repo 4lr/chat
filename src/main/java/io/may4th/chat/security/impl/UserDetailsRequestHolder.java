@@ -17,8 +17,8 @@ public class UserDetailsRequestHolder {
     private final Optional<UserDetails> userDetails;
 
     @Autowired
-    public UserDetailsRequestHolder(HttpServletRequest request, JwtAuthenticationProvider jwtAuthenticationProvider) {
-        this.userDetails = jwtAuthenticationProvider.extractUserDetails(request);
+    public UserDetailsRequestHolder(HttpServletRequest request, AuthenticationProvider authenticationProvider) {
+        this.userDetails = authenticationProvider.extractUserDetails(request);
     }
 
     public Optional<UserDetails> getUserDetails() {

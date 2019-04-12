@@ -1,16 +1,16 @@
 package io.may4th.chat.web.controllers;
 
 import io.may4th.chat.security.api.CurrentUser;
-import io.may4th.chat.security.api.JwtTokenProvider;
 import io.may4th.chat.security.api.PasswordEncoder;
 import io.may4th.chat.security.api.Secured;
+import io.may4th.chat.security.api.TokenProvider;
 import io.may4th.chat.security.api.UserDetails;
 import io.may4th.chat.security.api.UserDetailsService;
 import io.may4th.chat.security.api.exceptions.AuthenticationException;
 import io.may4th.chat.services.UserService;
 import io.may4th.chat.services.tos.NewUserTO;
 import io.may4th.chat.web.payload.ApiErrorResponse;
-import io.may4th.chat.web.payload.JwtAuthResponse;
+import io.may4th.chat.web.payload.AuthTokenResponse;
 import io.may4th.chat.web.payload.SignInRequest;
 import io.may4th.chat.web.payload.SignUpRequest;
 import io.swagger.annotations.ApiResponse;
@@ -37,7 +37,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     @Autowired
-    private final JwtTokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
@@ -69,11 +69,11 @@ public class AuthController {
         return currentUser;
     }
 
-    private JwtAuthResponse authenticate(String username, String password) {
+    private AuthTokenResponse authenticate(String username, String password) {
         val userDetails = userDetailsService.loadUserByUsername(username);
         if (passwordEncoder.matches(password, userDetails.getPassword())) {
             val token = tokenProvider.generateToken(userDetails);
-            return new JwtAuthResponse(token);
+            return new AuthTokenResponse(token);
         }
         throw new AuthenticationException();
     }

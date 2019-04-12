@@ -1,21 +1,21 @@
 package io.may4th.chat.security.impl;
 
 import io.may4th.chat.security.api.PasswordEncoder;
-import lombok.SneakyThrows;
 import lombok.val;
 import org.springframework.stereotype.Component;
 
-import java.security.MessageDigest;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Random;
 
 @Component
-public class Sha1PasswordEncoderImpl implements PasswordEncoder {
+public class Sha1PasswordEncoderImpl extends BaseCoder implements PasswordEncoder {
 
     private static final String ALGORITHM = "SHA-1";
     private static final int SALT_LENGTH = 32;
 
+    public Sha1PasswordEncoderImpl() {
+        super(ALGORITHM);
+    }
 
     private byte[] join(byte[] a, byte[] b) {
         val result = new byte[a.length + b.length];
@@ -24,28 +24,10 @@ public class Sha1PasswordEncoderImpl implements PasswordEncoder {
         return result;
     }
 
-
-    private String encode(byte[] data) {
-        return Base64.getEncoder().encodeToString(data);
-    }
-
-    private byte[] decode(String data) {
-        return Base64.getDecoder().decode(data);
-    }
-
     private byte[] salt() {
         val data = new byte[SALT_LENGTH];
         new Random().nextBytes(data);
         return data;
-    }
-
-    @SneakyThrows
-    private byte[] hash(byte[]... data) {
-        val digest = MessageDigest.getInstance(ALGORITHM);
-        for (val chunk : data) {
-            digest.update(chunk);
-        }
-        return digest.digest();
     }
 
     @Override

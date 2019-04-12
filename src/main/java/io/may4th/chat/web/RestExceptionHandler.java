@@ -4,6 +4,7 @@ import io.may4th.chat.security.api.exceptions.AccessDeniedException;
 import io.may4th.chat.security.api.exceptions.AuthenticationException;
 import io.may4th.chat.services.exceptions.ResourceNotFoundException;
 import io.may4th.chat.web.payload.ApiErrorResponse;
+import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.dao.DuplicateKeyException;
@@ -29,11 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ControllerAdvice
+@Log4j2
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val error = "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
         val apiError = new ApiErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), error);
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
@@ -41,7 +43,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val builder = new StringBuilder();
         builder.append(ex.getMethod());
         builder.append(" method is not supported for this request. Supported methods are ");
@@ -52,7 +54,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val builder = new StringBuilder();
         builder.append(ex.getContentType());
         builder.append(" media type is not supported. Supported media types are ");
@@ -63,7 +65,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val errors = collectErrors(ex.getBindingResult());
         val apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), errors);
         return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
@@ -71,7 +73,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val errors = collectErrors(ex.getBindingResult());
         val apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), errors);
         return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
@@ -79,7 +81,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val error = ex.getValue() + " value for " + ex.getPropertyName() + " should be of type " + ex.getRequiredType();
         val apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), error);
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
@@ -87,7 +89,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestPart(MissingServletRequestPartException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val error = ex.getRequestPartName() + " part is missing";
         val apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), error);
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
@@ -95,7 +97,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val error = ex.getParameterName() + " parameter is missing";
         val apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), error);
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
@@ -103,7 +105,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
         val apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), error);
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
@@ -111,7 +113,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val errors = new ArrayList<String>();
         for (val violation : ex.getConstraintViolations()) {
             errors.add(violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": " + violation.getMessage());
@@ -122,35 +124,35 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Object> handleAccessDenied(AccessDeniedException ex) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val apiError = new ApiErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler({AuthenticationException.class})
     public ResponseEntity<Object> handleAuthentication(AuthenticationException ex) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val apiError = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler({ResourceNotFoundException.class})
     public ResponseEntity<Object> handleResourceNotFound(ResourceNotFoundException ex) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val apiError = new ApiErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler({DuplicateKeyException.class})
     public ResponseEntity<Object> handleDuplicateKey(DuplicateKeyException ex) {
-        logger.info(ex.getClass().getName() + ": " + ex.getMessage());
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val apiError = new ApiErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAll(Exception ex) {
-        logger.error("Exception", ex);
+        log.error("Exception", ex);
         val apiError = new ApiErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.name());
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }

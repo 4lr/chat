@@ -45,7 +45,7 @@ public class Swagger2Config {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+        return new ApiKey("Token", AUTHORIZATION_HEADER, "header");
     }
 
     private SecurityContext securityContext() {
@@ -59,6 +59,6 @@ public class Swagger2Config {
         val authorizationScope = new AuthorizationScope("global", "accessEverything");
         val authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Collections.singletonList(new SecurityReference("JWT", authorizationScopes));
+        return Collections.singletonList(new SecurityReference("Token", authorizationScopes));
     }
 }

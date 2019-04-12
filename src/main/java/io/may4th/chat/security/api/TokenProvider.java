@@ -1,6 +1,6 @@
 package io.may4th.chat.security.api;
 
-public interface JwtTokenProvider {
+public interface TokenProvider {
 
     String generateToken(UserDetails userDetails);
 }

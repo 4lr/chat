@@ -1,6 +1,7 @@
 ## System requirement
 
 - Node 10
+- JRE 8
 
 ## Available Scripts
 

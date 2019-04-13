@@ -49,18 +49,18 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody @Valid SignInRequest signInRequest) {
-        return ResponseEntity.ok(authenticate(signInRequest.getUsername(), signInRequest.getPassword()));
+    public AuthTokenResponse signin(@RequestBody @Valid SignInRequest signInRequest) {
+        return authenticate(signInRequest.getUsername(), signInRequest.getPassword());
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody @Valid SignUpRequest signUpRequest) {
+    public AuthTokenResponse signup(@RequestBody @Valid SignUpRequest signUpRequest) {
         val newUserTO = new NewUserTO();
         newUserTO
             .setUsername(signUpRequest.getUsername())
             .setHash(passwordEncoder.encode(signUpRequest.getPassword()));
         userService.save(newUserTO);
-        return ResponseEntity.ok(authenticate(signUpRequest.getUsername(), signUpRequest.getPassword()));
+        return authenticate(signUpRequest.getUsername(), signUpRequest.getPassword());
     }
 
     @GetMapping("/me")

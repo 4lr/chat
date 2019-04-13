@@ -4,15 +4,15 @@ import Header from "./components/Header";
 import Hello from "./components/Hello";
 import Login from "./components/Login";
 import Room from "./components/Room";
-import {JwtAuthResponse} from "./api/AuthController";
 import axios from 'axios';
+import {AuthTokenResponse} from "./generated";
 
 export interface Props {
 }
 
 export interface State {
     isAuthenticated?: boolean,
-    token?: JwtAuthResponse
+    token?: AuthTokenResponse
 }
 
 export default class App extends Component<Props, State> {
@@ -46,8 +46,8 @@ export default class App extends Component<Props, State> {
                        }
                 />
             </Switch> :
-            <Login setToken={(jwtAuthResponse) => {
-                axios.defaults.headers.common = {Authorization: `${jwtAuthResponse.tokenType} ${jwtAuthResponse.accessToken}`};
+            <Login setToken={(authTokenResponse) => {
+                axios.defaults.headers.common = {Authorization: authTokenResponse.accessToken};
                 this.setState({isAuthenticated: true});
             }}/>;
     }

@@ -1,8 +1,9 @@
 import React, {ChangeEvent, PureComponent} from 'react';
-import {authController, JwtAuthResponse} from "../api/AuthController";
+import {AuthControllerApi, AuthTokenResponse} from "../generated";
+import {basePath} from "../config";
 
 export interface Props {
-    setToken: (jwtAuthResponse: JwtAuthResponse) => void;
+    setToken: (authTokenResponse: AuthTokenResponse) => void;
 }
 
 export interface State {
@@ -14,6 +15,8 @@ const user = {
     username: 'John',
     password: 'pass',
 };
+
+const authController = new AuthControllerApi({basePath: basePath});
 
 export default class Login extends PureComponent<Props, State> {
 
@@ -55,14 +58,20 @@ export default class Login extends PureComponent<Props, State> {
     };
 
     protected async handleSignin() {
-        const jwtAuthResponse = await authController.signin({username: this.state.username, password: this.state.password});
-        this.props.setToken(jwtAuthResponse);
+        const authTokenResponse = (await authController.signinUsingPOST({
+            username: this.state.username,
+            password: this.state.password
+        })).data;
+        this.props.setToken(authTokenResponse);
         this.setState(user);
     };
 
     protected async handleSignup() {
-        const jwtAuthResponse = await authController.signin({username: this.state.username, password: this.state.password});
-        this.props.setToken(jwtAuthResponse);
+        const authTokenResponse = (await authController.signupUsingPOST({
+            username: this.state.username,
+            password: this.state.password
+        })).data;
+        this.props.setToken(authTokenResponse);
         this.setState(user);
     };
 }

@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4';
-import {messageController, PostMessageTo} from "../api/MessageController";
+import {messageController, NewMessageTo} from "../api/MessageController";
 
 const userId = '00000000-0000-0000-C000-000000000777';
 const timeout = 2000;
@@ -16,24 +16,24 @@ class MessageStore {
     }
 
     public postMessage(newMessage: { roomId: string; body: string; }) {
-        const postMessageTo: PostMessageTo = {
+        const newMessageTo: NewMessageTo = {
             id: uuidv4(),
             userId: userId,
             roomId: newMessage.roomId,
             body: newMessage.body,
         };
 
-        /*const messages = this.store.has(postMessageTo.roomId) ? this.store.get(postMessageTo.roomId) : [];
+        /*const messages = this.store.has(newMessageTo.roomId) ? this.store.get(newMessageTo.roomId) : [];
         // @ts-ignore
         messages.push({
-            ...postMessageTo,
+            ...newMessageTo,
             timestamp: new Date()
         });
         // @ts-ignore
-        this.store.set(postMessageTo.roomId, messages);*/
+        this.store.set(newMessageTo.roomId, messages);*/
 
         try {
-            messageController.postMessage(postMessageTo);
+            messageController.postMessage(newMessageTo);
         } catch (e) {
             console.error(e);
         }
@@ -59,7 +59,7 @@ class MessageStore {
             //const messages = this.store.get(roomId);
 
             try {
-                const messageTos = await messageController.getMessages(roomId);
+                const messageTos = await messageController.getMessagesByRoomId(roomId);
                 const messages = messageTos.map((messageTo) => {
                     return {
                         ...messageTo,

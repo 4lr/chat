@@ -5,12 +5,12 @@ const path = '/api/message';
 
 class MessageController {
 
-    public async postMessage(postMessageTo: PostMessageTo): Promise<MessageTo> {
-        const result = await axios.post<MessageTo>(path, postMessageTo);
+    public async postMessage(newMessageTo: NewMessageTo): Promise<MessageTo> {
+        const result = await axios.post<MessageTo>(path, newMessageTo);
         return result.data;
     };
 
-    public async getMessages(roomId: string): Promise<MessageTo[]> {
+    public async getMessagesByRoomId(roomId: string): Promise<MessageTo[]> {
         const result = await axios.get<MessageTo[]>(path + '?' + querystring.stringify({roomId: roomId}));
         return result.data;
     };
@@ -26,7 +26,7 @@ export interface MessageTo {
     timestamp: string;
 }
 
-export interface PostMessageTo {
+export interface NewMessageTo {
     id: string,
     userId: string,
     roomId: string,

@@ -1,12 +1,19 @@
 import uuidv4 from 'uuid/v4';
+import {messageController} from "../api/MessageController";
 
 const userId = '00000000-0000-0000-C000-000000000777';
+const timeout = 2000;
 
 class MessageStore {
 
     subscribers = new Map();
-    store = new Map();
-    interval = setInterval(this.fetchMessages.bind(this), 1000);
+
+    //store = new Map();
+
+    constructor() {
+        this.fetchMessages = this.fetchMessages.bind(this);
+        setTimeout(this.fetchMessages, timeout);
+    }
 
     postMessage(newMessage) {
         const postMessageTo = {
@@ -15,12 +22,18 @@ class MessageStore {
             roomId: newMessage.roomId,
             body: newMessage.body,
         };
-        const messages = this.store.has(postMessageTo.roomId) ? this.store.get(postMessageTo.roomId) : [];
+        /*const messages = this.store.has(postMessageTo.roomId) ? this.store.get(postMessageTo.roomId) : [];
         messages.push({
             ...postMessageTo,
             timestamp: new Date()
         });
-        this.store.set(postMessageTo.roomId, messages);
+        this.store.set(postMessageTo.roomId, messages);*/
+
+        try {
+            messageController.postMessage(postMessageTo);
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     subscribe(roomId, callback) {
@@ -36,12 +49,24 @@ class MessageStore {
     };
 
     fetchMessages() {
+        this.subscribers.forEach(async (roomSubscribers, roomId) => {
 
+            //const messages = this.store.get(roomId);
 
-        this.subscribers.forEach((roomSubscribers, roomId) => {
-            const messages = this.store.get(roomId);
-            roomSubscribers.forEach(callback => callback(Array.from(messages ? messages : [])));
+            try {
+                const messageTos = await messageController.getMessages(roomId);
+                const messages = messageTos.map((messageTo) => {
+                    return {
+                        ...messageTo,
+                        timestamp: new Date(messageTo.timestamp)
+                    };
+                });
+                roomSubscribers.forEach(callback => callback(Array.from(messages ? messages : [])));
+            } catch (e) {
+                console.error(e);
+            }
         });
+        setTimeout(this.fetchMessages, timeout);
     };
 }
 

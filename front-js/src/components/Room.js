@@ -11,6 +11,12 @@ export default class Room extends PureComponent {
 
     subscriptionId = '';
 
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     componentDidMount() {
         this.subscriptionId = messageStore.subscribe(this.props.roomId, (messages) => {
             this.setState({messages: messages});
@@ -20,16 +26,6 @@ export default class Room extends PureComponent {
     componentWillUnmount() {
         messageStore.unSubscribe(this.subscriptionId);
     }
-
-
-    handleChange = (ev) => {
-        this.setState({newMessageText: ev.target.value});
-    };
-
-    handleSubmit = () => {
-        messageStore.postMessage({roomId: this.props.roomId, body: this.state.newMessageText});
-        this.setState({newMessageText: ''});
-    };
 
     render() {
         return (
@@ -42,12 +38,21 @@ export default class Room extends PureComponent {
                 </div>
                 <div style={{position:"fixed",bottom:"0px"}}>
                     <input
-                        onChange={this.handleChange.bind(this)}
+                        onChange={this.handleChange}
                         value={this.state.newMessageText}
                     />
-                    <button onClick={this.handleSubmit.bind(this)}>Send</button>
+                    <button onClick={this.handleSubmit}>Send</button>
                 </div>
             </div>
         );
     }
+
+    handleChange = (ev) => {
+        this.setState({newMessageText: ev.target.value});
+    };
+
+    handleSubmit = () => {
+        messageStore.postMessage({roomId: this.props.roomId, body: this.state.newMessageText});
+        this.setState({newMessageText: ''});
+    };
 }

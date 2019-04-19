@@ -16,21 +16,21 @@ class MessageStore {
     }
 
     postMessage(newMessage) {
-        const postMessageTo = {
+        const newMessageTo = {
             id: uuidv4(),
             userId: userId,
             roomId: newMessage.roomId,
             body: newMessage.body,
         };
-        /*const messages = this.store.has(postMessageTo.roomId) ? this.store.get(postMessageTo.roomId) : [];
+        /*const messages = this.store.has(newMessageTo.roomId) ? this.store.get(newMessageTo.roomId) : [];
         messages.push({
-            ...postMessageTo,
+            ...newMessageTo,
             timestamp: new Date()
         });
-        this.store.set(postMessageTo.roomId, messages);*/
+        this.store.set(newMessageTo.roomId, messages);*/
 
         try {
-            messageController.postMessage(postMessageTo);
+            messageController.postMessage(newMessageTo);
         } catch (e) {
             console.error(e);
         }

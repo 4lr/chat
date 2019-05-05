@@ -1,11 +1,11 @@
-package io.may4th.chat.services.internal;
+package io.may4th.chat.services.impl;
 
-import io.may4th.chat.domain.repositories.UserRepository;
-import io.may4th.chat.services.UserService;
-import io.may4th.chat.services.exceptions.ResourceNotFoundException;
-import io.may4th.chat.services.mappers.UserMapper;
-import io.may4th.chat.services.tos.NewUserTO;
-import io.may4th.chat.services.tos.UserTO;
+import io.may4th.chat.domain.api.UserRepository;
+import io.may4th.chat.services.api.UserService;
+import io.may4th.chat.services.api.exceptions.ResourceNotFoundException;
+import io.may4th.chat.services.impl.mappers.UserMapper;
+import io.may4th.chat.services.api.tos.NewUserTO;
+import io.may4th.chat.services.api.tos.UserTO;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;

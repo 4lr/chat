@@ -2,7 +2,7 @@ package io.may4th.chat.web;
 
 import io.may4th.chat.security.api.exceptions.AccessDeniedException;
 import io.may4th.chat.security.api.exceptions.AuthenticationException;
-import io.may4th.chat.services.exceptions.ResourceNotFoundException;
+import io.may4th.chat.services.api.exceptions.ResourceNotFoundException;
 import io.may4th.chat.web.payload.ApiErrorResponse;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;

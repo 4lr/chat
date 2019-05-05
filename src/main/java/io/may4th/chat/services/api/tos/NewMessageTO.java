@@ -1,4 +1,4 @@
-package io.may4th.chat.services.tos;
+package io.may4th.chat.services.api.tos;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

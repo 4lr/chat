@@ -1,4 +1,4 @@
-package io.may4th.chat.services.mappers;
+package io.may4th.chat.services.impl.mappers;
 
 import java.util.List;
 

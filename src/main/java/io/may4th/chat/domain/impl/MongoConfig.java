@@ -1,6 +1,5 @@
-package io.may4th.chat.domain;
+package io.may4th.chat.domain.impl;
 
-import io.may4th.chat.domain.base.JSR310DateConverters;
 import lombok.val;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventL
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 public class MongoConfig {

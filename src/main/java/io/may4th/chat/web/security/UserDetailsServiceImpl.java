@@ -1,7 +1,7 @@
 package io.may4th.chat.web.security;
 
 import io.may4th.chat.security.api.UserDetailsService;
-import io.may4th.chat.services.UserService;
+import io.may4th.chat.services.api.UserService;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,17 +1,13 @@
-package io.may4th.chat.services.tos;
+package io.may4th.chat.services.api.tos;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.UUID;
-
 @Accessors(chain = true)
 @Getter
 @Setter
-public class UserTO {
-
-    private UUID id;
+public class NewUserTO {
 
     private String username;
 

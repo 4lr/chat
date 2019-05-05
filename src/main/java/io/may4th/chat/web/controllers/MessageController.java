@@ -1,9 +1,9 @@
 package io.may4th.chat.web.controllers;
 
 import io.may4th.chat.security.api.Secured;
-import io.may4th.chat.services.MessageService;
-import io.may4th.chat.services.tos.MessageTO;
-import io.may4th.chat.services.tos.NewMessageTO;
+import io.may4th.chat.services.api.MessageService;
+import io.may4th.chat.services.api.tos.MessageTO;
+import io.may4th.chat.services.api.tos.NewMessageTO;
 import io.may4th.chat.web.payload.ApiErrorResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

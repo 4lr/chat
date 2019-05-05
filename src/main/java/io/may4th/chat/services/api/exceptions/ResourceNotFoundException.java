@@ -1,4 +1,4 @@
-package io.may4th.chat.services.exceptions;
+package io.may4th.chat.services.api.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 

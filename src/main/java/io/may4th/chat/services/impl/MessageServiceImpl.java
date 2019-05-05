@@ -1,10 +1,10 @@
-package io.may4th.chat.services.internal;
+package io.may4th.chat.services.impl;
 
-import io.may4th.chat.domain.repositories.MessageRepository;
-import io.may4th.chat.services.MessageService;
-import io.may4th.chat.services.mappers.MessageMapper;
-import io.may4th.chat.services.tos.MessageTO;
-import io.may4th.chat.services.tos.NewMessageTO;
+import io.may4th.chat.domain.api.MessageRepository;
+import io.may4th.chat.services.api.MessageService;
+import io.may4th.chat.services.impl.mappers.MessageMapper;
+import io.may4th.chat.services.api.tos.MessageTO;
+import io.may4th.chat.services.api.tos.NewMessageTO;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;

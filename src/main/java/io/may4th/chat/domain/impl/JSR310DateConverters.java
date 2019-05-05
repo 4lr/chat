@@ -1,4 +1,4 @@
-package io.may4th.chat.domain.base;
+package io.may4th.chat.domain.impl;
 
 import org.springframework.core.convert.converter.Converter;
 
@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-public class JSR310DateConverters {
+class JSR310DateConverters {
 
     private JSR310DateConverters() {
     }

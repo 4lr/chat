@@ -1,6 +1,6 @@
-package io.may4th.chat.domain.repositories;
+package io.may4th.chat.domain.api;
 
-import io.may4th.chat.domain.entities.Message;
+import io.may4th.chat.domain.api.entities.Message;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

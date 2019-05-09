@@ -1,5 +1,5 @@
 import React, {ChangeEvent, PureComponent} from 'react';
-import {AuthControllerApi, AuthTokenResponse} from "../generated";
+import {AuthControllerApi, AuthTokenResponse} from "../api";
 import {basePath} from "../config";
 
 export interface Props {

@@ -72,11 +72,10 @@
     "workbox-webpack-plugin": "3.6.3"
   },
   "scripts": {
-    "generate": "rm -rf src/generated/* && node_modules/.bin/openapi-generator generate -i http://localhost:8080/v2/api-docs -g typescript-axios -o src/generated",
+    "update-api": "rm -rf src/api/* && node_modules/.bin/openapi-generator generate -i http://localhost:8080/v2/api-docs -g typescript-axios -o src/api",
     "start": "node scripts/start.js",
-    "build": "npm run generate && node scripts/build.js",
-    "test": "npm run generate && node scripts/test.js",
-    "clean": "rm -rf src/generated/*"
+    "build": "rm -rf build && node scripts/build.js",
+    "test": "node scripts/test.js"
   },
   "eslintConfig": {
     "extends": "react-app"

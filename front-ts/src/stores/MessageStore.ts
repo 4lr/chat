@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4';
-import {MessageControllerApi, NewMessageTO} from "../generated";
+import {MessageControllerApi, NewMessageTO} from "../api";
 import {basePath} from "../config";
 
 const userId = '00000000-0000-0000-C000-000000000777';

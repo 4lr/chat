@@ -5,7 +5,7 @@ import Hello from "./components/Hello";
 import Login from "./components/Login";
 import Room from "./components/Room";
 import axios from 'axios';
-import {AuthTokenResponse} from "./generated";
+import {AuthTokenResponse} from "./api";
 
 export interface Props {
 }

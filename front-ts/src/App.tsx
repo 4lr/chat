@@ -1,12 +1,31 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, RouteComponentProps, Switch} from "react-router-dom";
+import React, { Component } from "react";
+import {
+    BrowserRouter as Router,
+    Route,
+    RouteComponentProps
+} from "react-router-dom";
 import Header from "./components/Header";
 import Hello from "./components/Hello";
-import Login from "./components/Login";
 import Room from "./components/Room";
-import axios from 'axios';
-import {AuthTokenResponse} from "./api";
 
+export default class App extends Component {
+    render() {
+        return (
+            <Router>
+                <Header />
+                <Route exact path="/" component={Hello} />
+                <Route
+                    path={`/:roomId`}
+                    component={(props: RouteComponentProps<{ roomId: string }>) => (
+                        <Room roomId={props.match.params.roomId} />
+                    )}
+                />
+            </Router>
+        );
+    }
+}
+
+/*
 export interface Props {
 }
 
@@ -52,3 +71,4 @@ export default class App extends Component<Props, State> {
             }}/>;
     }
 }
+*/

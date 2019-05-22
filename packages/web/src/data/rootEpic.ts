@@ -1,7 +1,7 @@
-import { combineEpics } from 'redux-observable';
+import {combineEpics} from 'redux-observable';
+import chatEpics from './chat/epics';
+import userEpics from './user/epics';
 
-import customerEpics from './customer/epics';
-
-export const rootEpic = combineEpics(customerEpics);
+export const rootEpic = combineEpics(chatEpics, userEpics);
 
 export default rootEpic;

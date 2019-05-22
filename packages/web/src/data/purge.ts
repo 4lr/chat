@@ -1,7 +1,7 @@
-import { action, ActionType } from 'typesafe-actions';
+import {action, ActionType} from 'typesafe-actions';
 
 export enum PURGE {
-  STORE = '@@purge/store',
+    STORE = '@@purge/store',
 }
 
 export const purgeStore = () => action(PURGE.STORE);

@@ -10,11 +10,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
-@AllArgsConstructor
 @Getter
 public class UserDetailsImpl implements UserDetails {
 
-    private final UUID id;
+    UserDetailsImpl(UUID id, String username, String password) {
+        this.id = id.toString();
+        this.username = username;
+        this.password = password;
+    }
+
+    private final String id;
 
     private final String username;
 
@@ -41,10 +46,6 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public String getId() {
-        return id.toString();
     }
 
     @AllArgsConstructor

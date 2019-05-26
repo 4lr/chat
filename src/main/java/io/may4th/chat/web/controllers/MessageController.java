@@ -1,6 +1,9 @@
 package io.may4th.chat.web.controllers;
 
+import io.may4th.chat.security.api.CurrentUser;
 import io.may4th.chat.security.api.Secured;
+import io.may4th.chat.security.api.UserDetails;
+import io.may4th.chat.security.api.exceptions.AccessDeniedException;
 import io.may4th.chat.services.api.MessageService;
 import io.may4th.chat.services.api.tos.MessageTO;
 import io.may4th.chat.services.api.tos.NewMessageTO;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -49,8 +53,10 @@ public class MessageController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageTO postMessage(@RequestBody @Valid NewMessageTO newMessageTO) {
-        // TODO validate userId
+    public MessageTO postMessage(@ApiIgnore @CurrentUser UserDetails currentUser, @RequestBody @Valid NewMessageTO newMessageTO) {
+        if (!currentUser.getId().equals(newMessageTO.getUserId().toString())) {
+            throw new AccessDeniedException();
+        }
         return messageService.save(newMessageTO);
     }
 }

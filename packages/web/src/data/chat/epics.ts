@@ -15,6 +15,7 @@ const onJoinEpic = (action$: Observable<TActionOnJoin>) => {
         mergeMap(({payload}: TActionOnJoin) => {
             return from(messageControllerApi.getMessagesByRoomIdUsingGET(payload)).pipe(
                 map((response: AxiosResponse<MessageTO[]>) => {
+                    response.data.forEach(message => message.timestamp = new Date(message.timestamp));
                     return onJoinSuccess(response.data);
                 }),
                 catchError((error: AxiosError) => of(onJoinError(error))),
@@ -30,6 +31,7 @@ const onSendEpic = (action$: Observable<TActionOnSend>) => {
             payload.id = uuidv4();
             return from(messageControllerApi.postMessageUsingPOST(payload)).pipe(
                 map((response: AxiosResponse<MessageTO>) => {
+                    response.data.timestamp = new Date(response.data.timestamp);
                     return onSendSuccess(response.data);
                 }),
                 catchError((error: AxiosError) => of(onSendError(error))),

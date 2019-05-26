@@ -7,6 +7,12 @@ const initialStateChat: IStateChat = {
     lastError: null,
 };
 
+const merge = (store: Map<string, MessageTO>, messages: MessageTO[]): Map<string, MessageTO> => {
+    const merge = new Map<string, MessageTO>(store);
+    messages.forEach(message => merge.set(message.id, message));
+    return merge;
+};
+
 export default function chatReducer(
     state: IStateChat = initialStateChat,
     action: TChatActionType | TPurgeActionType,
@@ -15,28 +21,14 @@ export default function chatReducer(
         case CHAT_ACTION_TYPES.JOIN:
             return state;
         case CHAT_ACTION_TYPES.JOIN_SUCCESS:
-            if (action.payload.length) {
-                const messages = new Map<string, MessageTO>(state.messages);
-                action.payload.map(message => {
-                    message.timestamp = new Date(message.timestamp);
-                    messages.set(message.id, message);
-                });
-                return {...state, messages: messages};
-            }
+            return {...state, messages: merge(state.messages, action.payload)};
             return state;
         case CHAT_ACTION_TYPES.JOIN_ERROR:
             return {...state, lastError: action.error};
         case CHAT_ACTION_TYPES.SEND:
             return state;
         case CHAT_ACTION_TYPES.SEND_SUCCESS:
-            if (action.payload) {
-                const messages = new Map<string, MessageTO>(state.messages);
-                const message = action.payload;
-                message.timestamp = new Date(message.timestamp);
-                messages.set(message.id, message);
-                return {...state, messages: messages};
-            }
-            return state;
+            return {...state, messages: merge(state.messages, [action.payload])};
         case CHAT_ACTION_TYPES.SEND_ERROR:
             return {...state, lastError: action.error};
         case PURGE.STORE:

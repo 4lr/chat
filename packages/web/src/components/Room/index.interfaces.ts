@@ -7,6 +7,7 @@ export interface TOwnProps {
 
 export type IStateToProps = {
     messages: MessageTO[],
+    userId: string,
 };
 
 export interface IDispatchToProps {

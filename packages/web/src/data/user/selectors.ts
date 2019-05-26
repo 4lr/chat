@@ -4,14 +4,14 @@ import {IStateUser} from './types';
 
 const selectUser = Selector.getRootBranch('user');
 
-export const selectToken = createSelector(
+export const selectUserId = createSelector(
     // @ts-ignore
     selectUser,
-    (state: IStateUser) => state.accessToken,
+    (state: IStateUser) => state.userId,
 );
 
 export const selectIsAuthenticated = createSelector(
     // @ts-ignore
     selectUser,
-    (state: IStateUser) => !!state.accessToken,
+    (state: IStateUser) => !!state.userId,
 );

@@ -9,7 +9,7 @@ export enum USER_ACTION_TYPES {
 }
 
 export interface IStateUser {
-    accessToken: string | null;
+    userId: string | null;
     lastError: AxiosError | null;
 }
 

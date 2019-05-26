@@ -1,7 +1,6 @@
 import React, {ChangeEvent, Component, PureComponent} from 'react';
 import {TProps} from './index.interfaces';
 import {MessageTO} from '../../api/__generated__';
-import uuidv4 from 'uuid/v4';
 
 interface State {
     message: string
@@ -64,9 +63,9 @@ export default class Room extends Component<TProps, State> {
 
     private readonly handleSubmit = () => {
         this.props.onSend({
-            id: uuidv4(),
+            id: '',
             roomId: this.props.roomId,
-            userId: '0ec401d2-e44c-4593-bffe-8e0e5c3c6d56',
+            userId: this.props.userId,
             body: this.state.message,
         });
         this.setState({message: ''});

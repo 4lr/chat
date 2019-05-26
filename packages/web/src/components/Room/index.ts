@@ -3,9 +3,11 @@ import {IRootState} from '../../models';
 import {IDispatchToProps, IStateToProps, TOwnProps} from './index.interfaces';
 import Room from './index.component';
 import {onJoin, onSend, selectMessages} from '../../data/chat';
+import {selectUserId} from '../../data/user';
 
 const mapStateToProps = (store: IRootState): IStateToProps => ({
     messages: selectMessages(store),
+    userId: selectUserId(store),
 });
 
 const mapDispatchToProps = {

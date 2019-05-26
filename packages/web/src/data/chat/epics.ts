@@ -5,6 +5,7 @@ import {AxiosError, AxiosResponse} from 'axios';
 import {onJoinError, onJoinSuccess, onSendError, onSendSuccess} from './actions';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {MessageControllerApi, MessageTO} from '../../api/__generated__';
+import uuidv4 from 'uuid';
 
 const messageControllerApi = new MessageControllerApi();
 
@@ -26,6 +27,7 @@ const onSendEpic = (action$: Observable<TActionOnSend>) => {
     return action$.pipe(
         ofType(CHAT_ACTION_TYPES.SEND),
         mergeMap(({payload}: TActionOnSend) => {
+            payload.id = uuidv4();
             return from(messageControllerApi.postMessageUsingPOST(payload)).pipe(
                 map((response: AxiosResponse<MessageTO>) => {
                     return onSendSuccess(response.data);

@@ -16,7 +16,8 @@ const onLoginEpic = (action$: Observable<TActionOnLogin>) => {
             return from(authController.signinUsingPOST(payload)).pipe(
                 map((response: AxiosResponse<AuthTokenResponse>) => {
                     axios.defaults.headers.common = {Authorization: response.data.accessToken};
-                    return onLoginSuccess(response.data);
+                    const userId = JSON.parse(atob(response.data.accessToken)).userId;
+                    return onLoginSuccess({userId: userId});
                 }),
                 catchError((error: AxiosError) => of(onLoginError(error))),
             );

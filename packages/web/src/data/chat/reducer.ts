@@ -26,6 +26,19 @@ export default function chatReducer(
             return state;
         case CHAT_ACTION_TYPES.JOIN_ERROR:
             return {...state, lastError: action.error};
+        case CHAT_ACTION_TYPES.SEND:
+            return state;
+        case CHAT_ACTION_TYPES.SEND_SUCCESS:
+            if (action.payload) {
+                const messages = new Map<string, MessageTO>(state.messages);
+                const message = action.payload;
+                message.timestamp = new Date(message.timestamp);
+                messages.set(message.id, message);
+                return {...state, messages: messages};
+            }
+            return state;
+        case CHAT_ACTION_TYPES.SEND_ERROR:
+            return {...state, lastError: action.error};
         case PURGE.STORE:
             return {...initialStateChat};
         default:

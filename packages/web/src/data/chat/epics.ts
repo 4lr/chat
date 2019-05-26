@@ -1,8 +1,8 @@
 import {from, Observable, of} from 'rxjs';
-import {CHAT_ACTION_TYPES, TActionOnJoin} from './types';
+import {CHAT_ACTION_TYPES, TActionOnJoin, TActionOnSend} from './types';
 import {combineEpics, ofType} from 'redux-observable';
 import {AxiosError, AxiosResponse} from 'axios';
-import {onJoinError, onJoinSuccess} from './actions';
+import {onJoinError, onJoinSuccess, onSendError, onSendSuccess} from './actions';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {MessageControllerApi, MessageTO} from '../../api/__generated__';
 
@@ -22,4 +22,18 @@ const onJoinEpic = (action$: Observable<TActionOnJoin>) => {
     );
 };
 
-export default combineEpics(onJoinEpic);
+const onSendEpic = (action$: Observable<TActionOnSend>) => {
+    return action$.pipe(
+        ofType(CHAT_ACTION_TYPES.SEND),
+        mergeMap(({payload}: TActionOnSend) => {
+            return from(messageControllerApi.postMessageUsingPOST(payload)).pipe(
+                map((response: AxiosResponse<MessageTO>) => {
+                    return onSendSuccess(response.data);
+                }),
+                catchError((error: AxiosError) => of(onSendError(error))),
+            );
+        }),
+    );
+};
+
+export default combineEpics(onJoinEpic, onSendEpic);

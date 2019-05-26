@@ -7,6 +7,9 @@ export enum CHAT_ACTION_TYPES {
     JOIN = '@@chat/join',
     JOIN_SUCCESS = '@@chat/join_success',
     JOIN_ERROR = '@@chat/join_error',
+    SEND = '@@chat/send',
+    SEND_SUCCESS = '@@chat/send_success',
+    SEND_ERROR = '@@chat/send_error',
 }
 
 export interface IStateChat {
@@ -18,3 +21,4 @@ export type TChatActions = typeof chatActions;
 export type TChatActionType = ActionType<TChatActions>;
 
 export type TActionOnJoin = ActionType<typeof chatActions.onJoin>;
+export type TActionOnSend = ActionType<typeof chatActions.onSend>;

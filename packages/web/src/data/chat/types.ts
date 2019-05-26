@@ -10,7 +10,7 @@ export enum CHAT_ACTION_TYPES {
 }
 
 export interface IStateChat {
-    messages: MessageTO[];
+    messages: Map<string, MessageTO>;
     lastError: AxiosError | null;
 }
 

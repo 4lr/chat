@@ -1771,7 +1771,7 @@
 
 "@openapitools/openapi-generator-cli@^0.0.11-4.0.0-beta3":
   version "0.0.11-4.0.0-beta3"
-  resolved "https://nexus.in.devexperts.com/repository/npm-dx/@openapitools/openapi-generator-cli/-/openapi-generator-cli-0.0.11-4.0.0-beta3.tgz#4f67dc239525d2a12e7e484f59b75eae3737ed36"
+  resolved "https://registry.yarnpkg.com/@openapitools/openapi-generator-cli/-/openapi-generator-cli-0.0.11-4.0.0-beta3.tgz#4f67dc239525d2a12e7e484f59b75eae3737ed36"
   integrity sha512-5lGL3umOJ9oU2I0OW0nG7lUAvemBZ0z4PxDlTOmzCQKya/uAMB+nFL3TXLcYL+l7YxvvYLTOjXZM6lxwF0Q0cw==
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":

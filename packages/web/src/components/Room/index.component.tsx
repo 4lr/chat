@@ -10,7 +10,7 @@ class RoomMessage extends PureComponent<{message: MessageTO}> {
     render() {
         return (
             <div>
-                [<span>{this.props.message.timestamp}</span>]
+                [<span>{this.props.message.timestamp.toString()}</span>]
                 <span>{this.props.message.userId}</span>:
                 <span>{this.props.message.body}</span>
             </div>

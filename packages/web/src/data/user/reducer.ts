@@ -2,7 +2,7 @@ import {USER_ACTION_TYPES, IStateUser, TUserActionType} from './types';
 import {PURGE, TPurgeActionType} from '../purge';
 
 const initialStateUser: IStateUser = {
-    userId: null,
+    userId: '',
     lastError: null,
 };
 

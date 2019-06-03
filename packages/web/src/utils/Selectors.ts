@@ -4,7 +4,7 @@ import {IRootState} from '../models';
 const checkState = (state: IRootState): IRootState => state;
 
 export class Selector {
-    public static getRootBranch(branchName: keyof IRootState) {
+    public static getRootBranch(branchName: keyof IRootState): any {
         return createSelector(
             checkState,
             (state: IRootState) => state[branchName],

@@ -15,7 +15,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "noUnusedLocals": false,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "downlevelIteration": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/node_modules/**"]

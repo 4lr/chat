@@ -46,7 +46,7 @@ export default class Login extends PureComponent<TProps, State> {
     };
 
     private readonly handleSignup = () => {
-        this.props.onLogin(this.state);
+        this.props.onSignUp(this.state);
         this.setState({username: '', password: ''});
     };
 }

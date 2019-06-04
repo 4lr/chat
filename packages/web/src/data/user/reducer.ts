@@ -17,6 +17,12 @@ export default function userReducer(
             return {...state, userId: action.payload.userId};
         case USER_ACTION_TYPES.LOGIN_ERROR:
             return {...state, lastError: action.error};
+        case USER_ACTION_TYPES.SIGNUP:
+            return state;
+        case USER_ACTION_TYPES.SIGNUP_SUCCESS:
+            return {...state, userId: action.payload.userId};
+        case USER_ACTION_TYPES.SIGNUP_ERROR:
+            return {...state, lastError: action.error};
         case PURGE.STORE:
             return {...initialStateUser};
         default:

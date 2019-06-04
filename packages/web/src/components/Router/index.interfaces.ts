@@ -1,7 +1,7 @@
 export type TOwnProps = null;
 
 export interface IStateToProps {
-    isAuthenticated: boolean,
+    isAuthenticated: boolean;
 }
 
 export type IDispatchToProps = null;

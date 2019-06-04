@@ -2,8 +2,8 @@ import React, {ChangeEvent, PureComponent} from 'react';
 import {TProps} from './index.interfaces';
 
 interface State {
-    username: string,
-    password: string,
+    username: string;
+    password: string;
 }
 
 export default class Login extends PureComponent<TProps, State> {

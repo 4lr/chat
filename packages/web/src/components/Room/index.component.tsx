@@ -3,7 +3,7 @@ import {TProps} from './index.interfaces';
 import {MessageTO} from '../../api/__generated__';
 
 interface State {
-    message: string
+    message: string;
 }
 
 class RoomMessage extends PureComponent<{message: MessageTO}> {

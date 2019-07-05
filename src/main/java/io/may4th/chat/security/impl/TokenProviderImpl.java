@@ -8,7 +8,6 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.nio.ByteBuffer;
@@ -23,15 +22,15 @@ public class TokenProviderImpl extends BaseCoder implements TokenProvider {
 
     private final ObjectMapper objectMapper;
 
-    @Value("${security.token.secret}")
-    private String secret;
+    private final byte[] secret;
 
-    @Value("${security.token.expms}")
-    private long expms;
+    private final long lifetime;
 
     @Autowired
-    TokenProviderImpl(ObjectMapper objectMapper) {
+    TokenProviderImpl(SecurityProperties securityProperties, ObjectMapper objectMapper) {
         super(ALGORITHM);
+        this.secret = securityProperties.getTokenSecret().getBytes();
+        this.lifetime = securityProperties.getTokenLifetime();
         this.objectMapper = objectMapper;
     }
 
@@ -42,7 +41,7 @@ public class TokenProviderImpl extends BaseCoder implements TokenProvider {
         val authToken = new AuthToken()
             .setUserId(userDetails.getId())
             .setIssuedAt(System.currentTimeMillis())
-            .setExpireAt(now + expms)
+            .setExpireAt(now + lifetime)
             .setSeed(new Random().nextLong());
 
         authToken.setSing(sing(authToken));
@@ -75,7 +74,7 @@ public class TokenProviderImpl extends BaseCoder implements TokenProvider {
         return encode(hash(
             authToken.getUserId().getBytes(),
             toBytes(authToken.getIssuedAt(), authToken.getExpireAt(), authToken.getSeed()),
-            secret.getBytes()
+            secret
         ));
     }
 }

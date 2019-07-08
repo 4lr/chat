@@ -3,6 +3,7 @@ import {PURGE, TPurgeActionType} from '../purge';
 import {MessageTO} from '../../api/__generated__';
 
 const initialStateChat: IStateChat = {
+    joined: false,
     messages: new Map<string, MessageTO>(),
     lastError: null,
 };
@@ -13,7 +14,9 @@ export default function chatReducer(
 ): IStateChat {
     switch (action.type) {
         case CHAT_ACTION_TYPES.JOIN:
-            return state;
+            return {...state, joined: true, messages: new Map<string, MessageTO>()};
+        case CHAT_ACTION_TYPES.UNJOIN:
+            return {...state, joined: false, messages: new Map<string, MessageTO>()};
         case CHAT_ACTION_TYPES.JOIN_SUCCESS:
             return {...state, messages: action.payload};
         case CHAT_ACTION_TYPES.JOIN_ERROR:

@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {IRootState} from '../../models';
 import {IDispatchToProps, IStateToProps, TOwnProps} from './index.interfaces';
 import Room from './index.component';
-import {onJoin, onSend, selectMessages} from '../../data/chat';
+import {onJoin, onSend, onUnjoin, selectMessages} from '../../data/chat';
 import {selectUserId} from '../../data/user';
 
 const mapStateToProps = (store: IRootState): IStateToProps => ({
@@ -12,6 +12,7 @@ const mapStateToProps = (store: IRootState): IStateToProps => ({
 
 const mapDispatchToProps = {
     onJoin,
+    onUnjoin,
     onSend,
 };
 

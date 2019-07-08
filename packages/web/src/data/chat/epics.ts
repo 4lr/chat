@@ -1,14 +1,15 @@
-import {from, Observable, of} from 'rxjs';
+import {defer, from, Observable, of} from 'rxjs';
 import {CHAT_ACTION_TYPES, TActionOnJoin, TActionOnSend} from './types';
 import {combineEpics, ofType} from 'redux-observable';
 import {AxiosError, AxiosResponse} from 'axios';
 import {onJoinError, onJoinSuccess, onSendError, onSendSuccess} from './actions';
-import {catchError, map, mergeMap} from 'rxjs/operators';
+import {catchError, delay, map, mergeMap, repeatWhen, takeWhile} from 'rxjs/operators';
 import {MessageControllerApi, MessageTO} from '../../api/__generated__';
 import uuidv4 from 'uuid';
 import {TStateObservableRootState} from '../../models';
 
 const messageControllerApi = new MessageControllerApi();
+const API_DELAY = 1000;
 
 const normaliser = (message: MessageTO): void => {
     message.timestamp = new Date(message.timestamp);
@@ -23,7 +24,10 @@ const onJoinEpic = (action$: Observable<TActionOnJoin>, state$: TStateObservable
     return action$.pipe(
         ofType(CHAT_ACTION_TYPES.JOIN),
         mergeMap(({payload}: TActionOnJoin) => {
-            return from(messageControllerApi.getMessagesByRoomIdUsingGET(payload)).pipe(
+            return defer(() => from(messageControllerApi.getMessagesByRoomIdUsingGET(payload))).pipe(
+                repeatWhen((complete: Observable<any>) => complete.pipe(delay(API_DELAY), takeWhile(() => {
+                    return state$.value.chat.joined;
+                }))),
                 map((response: AxiosResponse<MessageTO[]>) => {
                     response.data.forEach(normaliser);
                     return onJoinSuccess(new Map<string, MessageTO>([
@@ -31,7 +35,9 @@ const onJoinEpic = (action$: Observable<TActionOnJoin>, state$: TStateObservable
                         ...response.data.reduce(collector, new Map<string, MessageTO>())
                     ]));
                 }),
-                catchError((error: AxiosError) => of(onJoinError(error))),
+                catchError((error: AxiosError) => {
+                    return of(onJoinError(error))
+                }),
             );
         }),
     );

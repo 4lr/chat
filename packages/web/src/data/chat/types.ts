@@ -5,6 +5,7 @@ import {MessageTO} from '../../api/__generated__';
 
 export enum CHAT_ACTION_TYPES {
     JOIN = '@@chat/join',
+    UNJOIN = '@@chat/unjoin',
     JOIN_SUCCESS = '@@chat/join_success',
     JOIN_ERROR = '@@chat/join_error',
     SEND = '@@chat/send',
@@ -13,6 +14,7 @@ export enum CHAT_ACTION_TYPES {
 }
 
 export interface IStateChat {
+    joined: boolean;
     messages: Map<string, MessageTO>;
     lastError: AxiosError | null;
 }

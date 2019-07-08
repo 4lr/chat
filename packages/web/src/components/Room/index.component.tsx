@@ -24,17 +24,12 @@ export default class Room extends Component<TProps, State> {
         message: '',
     };
 
-    private interval: any;
-
     componentDidMount() {
         this.props.onJoin(this.props.roomId);
-        this.interval = setInterval(() => {
-            this.props.onJoin(this.props.roomId);
-        }, 5000);
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        this.props.onUnjoin();
     }
 
     render() {

@@ -8,7 +8,5 @@ interface BaseMapper<E, T, N> {
 
     E en(N to);
 
-    List<T> to(Iterable<E> entity);
-
-    List<E> en(Iterable<T> to);
+    List<T> to(List<E> entity);
 }

@@ -21,13 +21,17 @@ public class Message {
     @Id
     @NotNull
     private UUID id;
+
     @NotNull
     private UUID userId;
+
     @NotNull
     private UUID roomId;
+
     @NotNull
     private ZonedDateTime timestamp;
-    @NotBlank
+
     @Length(min = 1, max = 4096)
+    @NotBlank
     private String body;
 }

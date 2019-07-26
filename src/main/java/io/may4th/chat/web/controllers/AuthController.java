@@ -37,13 +37,10 @@ public class AuthController {
 
     @Autowired
     private final TokenProvider tokenProvider;
-
     @Autowired
     private final PasswordEncoder passwordEncoder;
-
     @Autowired
     private final UserDetailsService userDetailsService;
-
     @Autowired
     private final UserService userService;
 

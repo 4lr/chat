@@ -55,6 +55,7 @@ public class MessageController {
     @ResponseStatus(HttpStatus.CREATED)
     public MessageTO postMessage(@ApiIgnore @CurrentUser UserDetails currentUser, @RequestBody @Valid NewMessageTO newMessageTO) {
         if (!currentUser.getId().equals(newMessageTO.getUserId().toString())) {
+            // TODO ref it
             throw new AccessDeniedException();
         }
         return messageService.save(newMessageTO);

@@ -20,7 +20,6 @@ public class AuthenticationProvider {
 
     @Autowired
     private final TokenProviderImpl tokenProvider;
-
     @Autowired
     private final UserDetailsService userDetailsService;
 

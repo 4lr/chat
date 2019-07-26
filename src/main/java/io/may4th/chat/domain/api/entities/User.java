@@ -21,10 +21,12 @@ public class User {
     @Id
     @NotNull
     private UUID id;
-    @NotBlank
-    @Length(min = 4, max = 64)
+
     @Indexed(unique = true)
+    @Length(min = 4, max = 64)
+    @NotBlank
     private String username;
+
     @NotNull
     private String hash;
 }

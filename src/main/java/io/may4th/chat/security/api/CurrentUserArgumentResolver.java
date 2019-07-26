@@ -2,6 +2,7 @@ package io.may4th.chat.security.api;
 
 import io.may4th.chat.security.impl.UserDetailsRequestHolder;
 import lombok.AllArgsConstructor;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -19,11 +20,14 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterAnnotation(CurrentUser.class) != null && parameter.getParameterType().equals(UserDetails.class);
+        return parameter.getParameterAnnotation(CurrentUser.class) != null;
     }
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        return userDetailsRequestHolder.getUserDetails().orElse(null);
+        val userDetails = userDetailsRequestHolder.getUserDetails().orElse(null);
+        return parameter.getParameterType().isInstance(userDetails) ?
+            userDetailsRequestHolder.getUserDetails().orElse(null) :
+            null;
     }
 }

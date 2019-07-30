@@ -2,8 +2,8 @@ package io.may4th.chat.web.security;
 
 import io.may4th.chat.security.api.UserDetailsService;
 import io.may4th.chat.services.api.UserService;
+import io.may4th.chat.services.api.tos.UserTO;
 import lombok.AllArgsConstructor;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +18,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetailsImpl loadUserByUsername(String username) {
-        val userTO = userService.findByUsername(username);
-        return new UserDetailsImpl(userTO.getId(), userTO.getUsername(), userTO.getHash());
+        return userDetails(userService.findByUsername(username));
     }
 
     @Override
     public UserDetailsImpl loadUserById(String id) {
-        val userTO = userService.findById(UUID.fromString(id));
+        return userDetails(userService.findById(UUID.fromString(id)));
+    }
+
+    private UserDetailsImpl userDetails(UserTO userTO) {
         return new UserDetailsImpl(userTO.getId(), userTO.getUsername(), userTO.getHash());
     }
 }

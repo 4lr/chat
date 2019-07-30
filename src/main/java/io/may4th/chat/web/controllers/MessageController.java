@@ -2,12 +2,11 @@ package io.may4th.chat.web.controllers;
 
 import io.may4th.chat.security.api.CurrentUser;
 import io.may4th.chat.security.api.Secured;
-import io.may4th.chat.security.api.UserDetails;
-import io.may4th.chat.security.api.exceptions.AccessDeniedException;
-import io.may4th.chat.services.api.MessageService;
 import io.may4th.chat.services.api.tos.MessageTO;
 import io.may4th.chat.services.api.tos.NewMessageTO;
 import io.may4th.chat.web.payload.ApiErrorResponse;
+import io.may4th.chat.web.security.UserDetailsImpl;
+import io.may4th.chat.web.services.ChatService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -37,13 +36,16 @@ import java.util.UUID;
 public class MessageController {
 
     @Autowired
-    private final MessageService messageService;
+    private final ChatService chatService;
 
     @ApiOperation("getMessagesByRoomId")
     @ApiResponse(code = 200, message = "OK", response = MessageTO.class, responseContainer = "List")
     @GetMapping
-    public List<MessageTO> getMessagesByRoomId(@RequestParam UUID roomId) {
-        return messageService.findAllByRoomId(roomId);
+    public List<MessageTO> getMessagesByRoomId(
+        @ApiIgnore @CurrentUser UserDetailsImpl currentUser,
+        @RequestParam UUID roomId
+    ) {
+        return chatService.getAllMessagesByRoomId(currentUser, roomId);
     }
 
     @ApiOperation("postMessage")
@@ -53,11 +55,10 @@ public class MessageController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageTO postMessage(@ApiIgnore @CurrentUser UserDetails currentUser, @RequestBody @Valid NewMessageTO newMessageTO) {
-        if (!currentUser.getId().equals(newMessageTO.getUserId().toString())) {
-            // TODO ref it
-            throw new AccessDeniedException();
-        }
-        return messageService.save(newMessageTO);
+    public MessageTO postMessage(
+        @ApiIgnore @CurrentUser UserDetailsImpl currentUser,
+        @RequestBody @Valid NewMessageTO newMessageTO
+    ) {
+        return chatService.postMessage(currentUser, newMessageTO);
     }
 }

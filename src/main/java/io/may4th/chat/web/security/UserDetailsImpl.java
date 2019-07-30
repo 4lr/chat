@@ -10,20 +10,19 @@ import lombok.Getter;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @ApiModel("UserDetails")
 @Getter
 public class UserDetailsImpl implements UserDetails {
 
-    UserDetailsImpl(UUID id, String username, String password) {
-        this.id = id.toString();
-        this.username = username;
-        this.password = password;
-    }
-
     @ApiModelProperty(required = true, example = "00000000-0000-0000-C000-000000000246")
     private final String id;
+
+    @JsonIgnore
+    private final UUID uuid;
 
     @ApiModelProperty(required = true, example = "John")
     private final String username;
@@ -35,27 +34,25 @@ public class UserDetailsImpl implements UserDetails {
     private final Collection<GrantedAuthorityImpl> authorities = Collections.singletonList(new GrantedAuthorityImpl("ROLE_USER"));
 
     @ApiModelProperty(required = true)
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+    private final Set<UUID> rooms = new HashSet<>(Collections.singletonList(UUID.fromString("57a3d647-2aea-4493-aafe-59f7ca9b57d9")));
 
     @ApiModelProperty(required = true)
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+    private final boolean accountNonExpired = true;
 
     @ApiModelProperty(required = true)
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+    private final boolean accountNonLocked = true;
 
     @ApiModelProperty(required = true)
-    @Override
-    public boolean isEnabled() {
-        return true;
+    private final boolean credentialsNonExpired = true;
+
+    @ApiModelProperty(required = true)
+    private final boolean enabled = true;
+
+    UserDetailsImpl(UUID id, String username, String password) {
+        this.id = id.toString();
+        this.uuid = id;
+        this.username = username;
+        this.password = password;
     }
 
     @ApiModel("GrantedAuthority")

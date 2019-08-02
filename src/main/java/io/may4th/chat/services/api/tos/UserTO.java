@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.List;
 import java.util.UUID;
 
 @Accessors(chain = true)
@@ -21,4 +22,7 @@ public class UserTO {
 
     @JsonIgnore
     private String hash;
+
+    @ApiModelProperty(required = true)
+    private List<UUID> rooms;
 }

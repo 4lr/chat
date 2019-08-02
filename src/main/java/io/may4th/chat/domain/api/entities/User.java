@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.UUID;
 
 @Accessors(chain = true)
@@ -29,4 +30,7 @@ public class User {
 
     @NotNull
     private String hash;
+
+    @NotNull
+    private List<UUID> rooms;
 }

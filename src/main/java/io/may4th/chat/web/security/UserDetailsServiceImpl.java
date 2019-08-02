@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.TreeSet;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -27,6 +28,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private UserDetailsImpl userDetails(UserTO userTO) {
-        return new UserDetailsImpl(userTO.getId(), userTO.getUsername(), userTO.getHash());
+        return new UserDetailsImpl(userTO.getId(), userTO.getUsername(), userTO.getHash(), new TreeSet<>(userTO.getRooms()));
     }
 }

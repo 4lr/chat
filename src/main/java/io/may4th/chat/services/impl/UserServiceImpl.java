@@ -11,6 +11,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.UUID;
 
 @Service
@@ -37,6 +38,7 @@ public class UserServiceImpl extends BaseService<User, UserTO, NewUserTO> implem
     public UserTO save(NewUserTO newUserTO) {
         val user = userMapper.en(newUserTO);
         user.setId(UUID.randomUUID());
+        user.setRooms(Collections.emptyList());
         return userMapper.to(userRepository.save(user));
     }
 }

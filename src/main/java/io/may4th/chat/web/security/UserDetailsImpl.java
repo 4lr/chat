@@ -10,7 +10,6 @@ import lombok.Getter;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
     private final Collection<GrantedAuthorityImpl> authorities = Collections.singletonList(new GrantedAuthorityImpl("ROLE_USER"));
 
     @ApiModelProperty(required = true)
-    private final Set<UUID> rooms = new HashSet<>(Collections.singletonList(UUID.fromString("57a3d647-2aea-4493-aafe-59f7ca9b57d9")));
+    private final Set<UUID> rooms;
 
     @ApiModelProperty(required = true)
     private final boolean accountNonExpired = true;
@@ -48,11 +47,12 @@ public class UserDetailsImpl implements UserDetails {
     @ApiModelProperty(required = true)
     private final boolean enabled = true;
 
-    UserDetailsImpl(UUID id, String username, String password) {
+    UserDetailsImpl(UUID id, String username, String password, Set<UUID> rooms) {
         this.id = id.toString();
         this.uuid = id;
         this.username = username;
         this.password = password;
+        this.rooms = rooms;
     }
 
     @ApiModel("GrantedAuthority")

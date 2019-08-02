@@ -4,6 +4,7 @@ import io.may4th.chat.security.api.exceptions.AccessDeniedException;
 import io.may4th.chat.security.api.exceptions.AuthenticationException;
 import io.may4th.chat.services.api.exceptions.ResourceNotFoundException;
 import io.may4th.chat.web.payload.ApiErrorResponse;
+import io.may4th.chat.web.services.exceptions.PermissionDeniedException;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.springframework.beans.TypeMismatchException;
@@ -124,6 +125,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Object> handleAccessDenied(AccessDeniedException ex) {
+        log.info(ex.getClass().getName() + ": " + ex.getMessage());
+        val apiError = new ApiErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler({PermissionDeniedException.class})
+    public ResponseEntity<Object> handleAccessDenied(PermissionDeniedException ex) {
         log.info(ex.getClass().getName() + ": " + ex.getMessage());
         val apiError = new ApiErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());

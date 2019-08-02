@@ -1769,10 +1769,10 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
-"@openapitools/openapi-generator-cli@^0.0.11-4.0.0-beta3":
-  version "0.0.11-4.0.0-beta3"
-  resolved "https://registry.yarnpkg.com/@openapitools/openapi-generator-cli/-/openapi-generator-cli-0.0.11-4.0.0-beta3.tgz#4f67dc239525d2a12e7e484f59b75eae3737ed36"
-  integrity sha512-5lGL3umOJ9oU2I0OW0nG7lUAvemBZ0z4PxDlTOmzCQKya/uAMB+nFL3TXLcYL+l7YxvvYLTOjXZM6lxwF0Q0cw==
+"@openapitools/openapi-generator-cli@0.0.16-4.0.3":
+  version "0.0.16-4.0.3"
+  resolved "https://registry.yarnpkg.com/@openapitools/openapi-generator-cli/-/openapi-generator-cli-0.0.16-4.0.3.tgz#c123e6af65c51138c7e32d5d109d732436de44a1"
+  integrity sha512-5zdiSCnGikzFUSB8YO06JN6PSb/9USRctZFYJpg+2dMDgynB/DI84938KW1OWHXQMtPLGF5Yn0HUxpSYTlItOg==
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"

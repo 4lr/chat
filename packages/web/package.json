@@ -23,10 +23,12 @@
     "redux-observable": "^1.1.0",
     "reselect": "^4.0.0",
     "rxjs": "^6.4.0",
+    "sockjs-client": "^1.4.0",
     "styled-components": "^4.2.0",
     "typesafe-actions": "^4.0.0",
     "typescript": "3.4.5",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "0.0.16-4.0.3",
@@ -69,6 +71,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:8080"
+  }
 }

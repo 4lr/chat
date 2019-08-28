@@ -11,11 +11,11 @@ export default function userReducer(
     action: TUserActionType | TPurgeActionType,
 ): IStateUser {
     switch (action.type) {
-        case USER_ACTION_TYPES.LOGIN:
+        case USER_ACTION_TYPES.SIGNIN:
             return state;
-        case USER_ACTION_TYPES.LOGIN_SUCCESS:
+        case USER_ACTION_TYPES.SIGNIN_SUCCESS:
             return {...state, userId: action.payload.userId};
-        case USER_ACTION_TYPES.LOGIN_ERROR:
+        case USER_ACTION_TYPES.SIGNIN_ERROR:
             return {...state, lastError: action.error};
         case USER_ACTION_TYPES.SIGNUP:
             return state;

@@ -1,11 +1,11 @@
-import {onLogin, onSignUp} from '../../data/user';
+import {onSignIn, onSignUp} from '../../data/user';
 
 export type TOwnProps = null;
 
-export type IStateToProps = null;
+export type IStateToProps = {};
 
 export interface IDispatchToProps {
-    onLogin: typeof onLogin;
+    onSignIn: typeof onSignIn;
     onSignUp: typeof onSignUp;
 }
 

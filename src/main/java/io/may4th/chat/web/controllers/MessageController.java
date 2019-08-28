@@ -5,12 +5,15 @@ import io.may4th.chat.security.api.Secured;
 import io.may4th.chat.services.api.tos.MessageTO;
 import io.may4th.chat.services.api.tos.NewMessageTO;
 import io.may4th.chat.web.payload.ApiErrorResponse;
+import io.may4th.chat.web.payload.WsMessage;
 import io.may4th.chat.web.security.UserDetailsImpl;
 import io.may4th.chat.web.services.ChatService;
+import io.may4th.chat.web.services.WsService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +41,9 @@ public class MessageController {
     @Autowired
     private final ChatService chatService;
 
+    @Autowired
+    private final WsService wsService;
+
     @ApiOperation("getMessagesByRoomId")
     @ApiResponse(code = 200, message = "OK", response = MessageTO.class, responseContainer = "List")
     @GetMapping
@@ -59,6 +65,8 @@ public class MessageController {
         @ApiIgnore @CurrentUser UserDetailsImpl currentUser,
         @RequestBody @Valid NewMessageTO newMessageTO
     ) {
-        return chatService.postMessage(currentUser, newMessageTO);
+        val messageTO = chatService.postMessage(currentUser, newMessageTO);
+        wsService.send(new WsMessage("/room" + messageTO.getRoomId(), messageTO.getClass().getSimpleName(), messageTO));
+        return messageTO;
     }
 }
